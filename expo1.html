@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Exposition – Reflets Urbains</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body{margin:0;background:#111;color:#fff;font-family:Arial;text-align:center}
+    h1{font-weight:800;margin:20px 0}
+    .slider{position:relative;max-width:900px;margin:20px auto;overflow:hidden;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.5)}
+    .slides{display:flex;transition:transform .6s ease}
+    .slides img{width:100%;display:block}
+    .ctrl{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.6);border:0;color:#fff;font-size:22px;border-radius:50%;width:44px;height:44px;cursor:pointer}
+    .prev{left:10px}.next{right:10px}
+  </style>
+</head>
+<body>
+  <h1>« Reflets Urbains »</h1>
+  <div class="slider">
+    <div class="slides" id="slides">
+      <img src="images/reflets1.jpg" alt="">
+      <img src="images/reflets2.jpg" alt="">
+      <img src="images/reflets3.jpg" alt="">
+    </div>
+    <button class="ctrl prev" onclick="move(-1)">❮</button>
+    <button class="ctrl next" onclick="move(1)">❯</button>
+  </div>
+  <script>
+    let i=0; const s=document.getElementById('slides'), n=s.children.length;
+    function move(d){ i=(i+d+n)%n; s.style.transform=`translateX(-${i*100}%)`; }
+    // auto défilement (optionnel)
+    setInterval(()=>move(1), 4000);
+  </script>
+</body>
+</html>

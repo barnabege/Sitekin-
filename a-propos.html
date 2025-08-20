@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Expositions au Cabinet</title>
+
+  <!-- Police Montserrat (moderne) -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #87BFFF, #3B28CC);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: #222;
+    }
+
+    /* ✅ Animation du titre */
+.page-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 60px; /* 🔥 même taille que NOTRE ÉQUIPE */
+  color: #111; /* noir profond */
+  margin: 20px 0 30px 0px; /* espace haut + décalage gauche */
+  text-align: left;
+  position: relative;
+    text-transform: uppercase;
+  opacity: 0;
+  transform: translateX(-100%);
+  animation: slideIn 1.8s ease-out forwards;
+}
+
+/* Animation */
+@keyframes slideIn {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+    .page-content {
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding-top: -80px;
+    }
+
+    .gallery {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 30px;
+      padding: 0 30px;
+      width: 100%;
+      box-sizing: border-box;
+      z-index: 10;
+      position: relative;
+      margin-top: 10px;
+    }
+
+    .art-card {
+      position: relative;
+      height: calc(100vh - 210px);
+      flex: 1;
+      min-width: 300px;
+      max-width: 400px;
+      border-radius: 12px;
+      background-color: white;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.4s ease, filter 0.3s ease;
+      border-left: 8px solid #2667FF;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .art-card:hover {
+      transform: scale(1.05);
+      filter: brightness(0.95) saturate(1.1);
+    }
+
+    .art-card img {
+      flex: 1;
+      width: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .art-card .details {
+      padding: 20px;
+      background-color: white;
+    }
+
+    .art-card h3 {
+      font-size: 18px;
+      margin: 0 0 10px;
+      color: #003c47;
+    }
+
+    .art-card p {
+      font-size: 14px;
+      color: #555;
+      margin: 5px 0;
+    }
+
+    .ribbon {
+      position: absolute;
+      top: 10px;
+      left: -20px;
+      background: #3B28CC;
+      color: white;
+      padding: 5px 20px;
+      transform: rotate(-45deg);
+      font-size: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <!-- BARRE DE NAVIGATION -->
+  <nav class="navbar">
+    <div class="logo">Cabinet Médical</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="a-propos.html">Kiné & Art</a></li>
+      <li class="dropdown">
+        <a href="#">Équipe</a>
+        <ul class="dropdown-menu">
+          <li><a href="florence.html">Florence Fratte</a></li>
+          <li><a href="lauriane.html">Lauriane Brodier</a></li>
+          <li><a href="anne-claire.html">Anne-Claire Kuntz</a></li>
+          <li><a href="marion.html">Marion Rapin</a></li>
+        </ul>
+      </li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- CONTENU PRINCIPAL -->
+  <main class="page-content">
+    <h1 class="page-title">Expositions artistiques au cabinet</h1>
+    <div class="gallery">
+      <a href="expo1.html" class="art-card">
+        <div class="ribbon">Exposition</div>
+        <img src="images/kine1.webp" alt="Tableau 1">
+        <div class="details">
+          <h3>"Reflets Urbains"</h3>
+          <p>🗓 Exposé en mars 2024</p>
+          <p>🎨 Technique : Huile sur toile</p>
+        </div>
+      </a>
+      <a href="expo2.html" class="art-card">
+        <div class="ribbon">Exposition</div>
+        <img src="images/kine2.webp" alt="Peinture abstraite">
+        <div class="details">
+          <h3>"Énergie et mouvement"</h3>
+          <p>🗓 Exposé en juin 2024</p>
+          <p>🎨 Technique : Acrylique</p>
+        </div>
+      </a>
+      <a href="expo3.html" class="art-card">
+        <div class="ribbon">Exposition</div>
+        <img src="images/kine3.webp" alt="Art nature">
+        <div class="details">
+          <h3>"Évasion florale"</h3>
+          <p>🗓 Exposé en septembre 2023</p>
+          <p>🎨 Technique : Aquarelle</p>
+        </div>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

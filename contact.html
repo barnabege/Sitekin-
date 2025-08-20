@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact - Cabinet Médical</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ---------- GLOBAL ---------- */
+    body{
+      margin:0;
+      font-family:'Montserrat',sans-serif;
+      background:linear-gradient(135deg,#87BFFF,#3B28CC);
+    }
+
+    /* ---------- LAYOUT ---------- */
+    .container{
+      margin-top:120px;
+      display:flex;
+      justify-content:center;
+      padding:20px;
+    }
+    .contact-wrapper{
+      display:flex;
+      justify-content:center;
+      align-items:stretch;
+      gap:40px;
+      background:#2c1ea1;
+      border-radius:16px;
+      padding:20px;
+      max-width:1100px;
+      width:100%;
+      margin:auto;
+      box-shadow:0 4px 20px rgba(255,255,255,.6);
+    }
+
+    /* ---------- MAP ---------- */
+    .map-container{
+      flex:1 1 450px;
+      max-width:500px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+    .map-container iframe{
+      width:100%;
+      height:600px;
+      border:0;
+      border-radius:8px;
+      box-shadow:0 4px 16px rgba(255,255,255,.1);
+    }
+
+    /* ---------- CARD ---------- */
+    .contact-card{
+      flex:1 1 350px;
+      background:#3B28CC;
+      color:#fff;
+      padding:20px;
+      border-radius:12px;
+      display:flex;
+      flex-direction:column;
+      min-height:500px;
+      text-align:center;
+    }
+    .contact-image{
+      width:100%;
+      height:180px;
+      object-fit:cover;
+      border-radius:8px;
+      margin-bottom:15px;
+    }
+    .contact-info h2{
+      margin:6px 0 18px;
+      font-weight:700;
+      font-size:32px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      text-shadow:0 3px 8px rgba(0,0,0,.35);
+    }
+
+    /* ---------- PILLS ---------- */
+    .info-list{
+      display:grid;
+      gap:12px;
+      margin:0 auto;
+      max-width:420px;
+      width:100%;
+    }
+
+    /* Make the whole pill the link */
+    .info-pill{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px 16px;
+      border-radius:14px;
+      background:rgba(255,255,255,0);
+      border:1px solid rgba(255,255,255,.11);
+      box-shadow:0 8px 20px rgba(0,0,0,.2);
+      color:#fff;                   /* text color for the link */
+      text-decoration:none;         /* remove underline */
+      backdrop-filter:blur(2px);
+      cursor:pointer;
+      transition:transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+    }
+    .info-pill .icon{
+      font-size:20px;
+      filter:drop-shadow(0 0 6px rgba(255,255,255,.35));
+      line-height:1;
+    }
+    .info-pill:hover,
+    .info-pill:focus-visible{
+      transform:translateY(-2px) scale(1.02);
+      box-shadow:
+        0 12px 30px rgba(0,0,0,.28),
+        0 0 18px rgba(255,255,255,.22) inset,
+        0 0 22px rgba(173,215,246,.35);
+      border-color:rgba(255,255,255,.55);
+      background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+      outline:none;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .footer{
+      width:100%;
+      background:#3B28CC;
+      color:#fff;
+      text-align:center;
+      padding:15px 0;
+      font-size:14px;
+      margin-top:50px;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media(max-width:960px){
+      .contact-wrapper{flex-direction:column;}
+      .map-container{max-width:none;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="logo">Cabinet Médical</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="a-propos.html">Kiné & Art</a></li>
+      <li class="dropdown">
+        <a href="#">Équipe</a>
+        <ul class="dropdown-menu">
+          <li><a href="florence.html">Florence Fratte</a></li>
+          <li><a href="lauriane.html">Lauriane Brodier</a></li>
+          <li><a href="anne-claire.html">Anne-Claire Kuntz</a></li>
+          <li><a href="marion.html">Marion Rapin</a></li>
+        </ul>
+      </li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- CONTENT -->
+  <div class="container">
+    <div class="contact-wrapper">
+
+      <!-- Map -->
+      <div class="map-container">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.387050791781!2d7.736!3d48.584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4796c84f0b1f!2s9%20Rue%20du%20Marais%20Vert%2C%2067000%20Strasbourg!5e0!3m2!1sfr!2sfr!4v1700000000000"
+          allowfullscreen="" loading="lazy"></iframe>
+      </div>
+
+      <!-- Card -->
+      <div class="contact-card">
+        <img src="images/team.webp" alt="Cabinet médical" class="contact-image"/>
+
+        <div class="contact-info">
+          <h2>Contactez-nous</h2>
+
+          <div class="info-list">
+            <a class="info-pill" href="tel:0390206489" aria-label="Appeler le cabinet au 03 90 20 64 89">
+              <span class="icon">📞</span>
+              <span>03 90 20 64 89</span>
+            </a>
+
+            <a class="info-pill" href="mailto:contact@cabinetkine-strasbourg.fr" aria-label="Envoyer un email au cabinet">
+              <span class="icon">✉️</span>
+              <span>contact@cabinetkine-strasbourg.fr</span>
+            </a>
+
+            <a class="info-pill" href="https://www.google.com/maps/dir/?api=1&destination=9+Rue+du+Marais+Vert,+67000+Strasbourg" target="_blank" rel="noopener" aria-label="Itinéraire Google Maps vers le cabinet">
+              <span class="icon">🗺️</span>
+              <span>Itinéraire Google Maps</span>
+            </a>
+
+            <a class="info-pill" href="index.html" aria-label="Retour à l'accueil">
+              <span class="icon">⬅️</span>
+              <span>Retour à l'accueil</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 Cabinet Médical - Tous droits réservés</p>
+  </footer>
+
+</body>
+</html>

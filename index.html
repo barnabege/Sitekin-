@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cabinet Médical</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://unpkg.com" />
+  <style>
+    /* ====== Réglages généraux ====== */
+    html { scroll-behavior: smooth; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #87BFFF, #3B28CC); /* ✅ un seul fond */
+  color: #1D1E18;
+  animation: fadeIn 0.5s ease;
+}
+
+/* Sections transparentes → elles laissent voir le fond global */
+.team,
+.specialisation-title,
+.infos {
+  background: transparent !important;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ====== NAVBAR (inchangée) ====== */
+    .navbar {
+      background-color: #3B28CC;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      transition: padding 0.3s ease;
+    }
+    .navbar:hover { padding: 30px 40px; }
+    .logo { font-size: 1.3rem; font-weight: 600; }
+    .nav-links { list-style: none; display: flex; gap: 20px; }
+    .nav-links li { position: relative; }
+    .nav-links a {
+      color: white; text-decoration: none; font-weight: 500;
+      padding: 8px 12px; transition: color .3s;
+    }
+    .nav-links a:hover { color: #d9fff5; }
+
+    /* Dropdown */
+    .dropdown { position: relative; }
+    .dropdown-menu{
+      list-style: none;
+      position: absolute; top: 100%; left: 95%; transform: translateX(-50%);
+      background-color: #3B28CC; padding: 0; margin: 0;
+      display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none; transition: opacity .3s ease;
+      border-radius: 8px; min-width: 220px; box-shadow: 0 10px 20px rgba(0,0,0,.2);
+    }
+    .dropdown-menu li a { display: block; padding: 10px 20px; white-space: nowrap; }
+    .dropdown-menu li a:hover { background: rgba(255,255,255,.2); }
+    .dropdown:hover .dropdown-menu { opacity: 1; pointer-events: auto; }
+    .dropdown:hover .dropdown-menu li:nth-child(1) { transition-delay: 0s; }
+    .dropdown:hover .dropdown-menu li:nth-child(2) { transition-delay: .05s; }
+    .dropdown:hover .dropdown-menu li:nth-child(3) { transition-delay: .1s; }
+    .dropdown:hover .dropdown-menu li:nth-child(4) { transition-delay: .15s; }
+
+    /* Décaler le contenu à cause de la navbar fixe */
+    main { margin-top: 0px; }
+
+    /* ====== CAROUSEL ====== */
+    .carousel {
+      width: 100%; height: 650px; overflow: hidden; position: relative;
+    }
+    .carousel img{
+      width: 100%; height: 650px; object-fit: cover;
+      position: absolute; top: 0; left: 0;
+      opacity: 0; transition: opacity 1s ease-in-out;
+    }
+    .carousel img.active{ opacity: 1; }
+
+    /* ====== Bouton RDV (héros) ====== */
+    .btn-rdv{
+      display:inline-block; padding:25px 40px; font-size:25px; background:#3B28CC; color:#fff;
+      font-weight:600; border-radius:30px; text-decoration:none;
+      box-shadow:0 6px 18px rgba(0,0,0,.2);
+      transition: transform .4s ease, box-shadow .4s ease, background .4s ease;
+      margin-top: 40px;
+    }
+    .btn-rdv:hover{ transform: scale(1.06); background:#2A1E99; box-shadow:0 12px 28px rgba(0,0,0,.25); }
+    .btn-rdv:active{ transform:translateY(0); box-shadow:0 6px 14px rgba(0,0,0,.15); }
+    .rdv-container{ text-align:center; margin-top:18px; }
+
+    /* ====== SECTION ÉQUIPE (2 × 2) ====== */
+    .team{
+      position: relative;           /* contexte pour les nuages */
+      padding: 60px 10px;
+      background: linear-gradient(135deg, #87BFFF, #3B28CC);
+      scroll-margin-top: 120px;     /* offset du scroll (navbar fixe) */
+      overflow: visible;
+    }
+    /* Titre de section (très grand, aligné à gauche) */
+.team__title{
+  text-align: left;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #1D1E18;
+  margin: 0 0 36px 20px;                 /* petit décalage à gauche */
+  font-size: clamp(56px, 8vw, 96px);     /* ++ grand */
+  line-height: 1.05;
+}
+
+/* Animation d’entrée depuis la gauche */
+.reveal-left{
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: transform .8s cubic-bezier(.2,.8,.2,1), opacity 1.5s ease;
+  will-change: transform, opacity;
+}
+.reveal-left.in{
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Respecte l’accessibilité */
+@media (prefers-reduced-motion: reduce){
+  .reveal-left,
+  .reveal-left.in{
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+    .team__grid{
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(2, minmax(320px, 1fr)); gap: 28px;
+    }
+    @media (max-width: 720px){ .team__grid{ grid-template-columns: 1fr; } }
+
+    .team-card{
+      position: relative; z-index: 2;   /* cartes devant les nuages */
+      background:#3B28CC; color:#fff; border-radius:18px; overflow:hidden;
+      box-shadow: 0 10px 28px rgba(0,0,0,.18);
+      transition: transform .3s ease, box-shadow .3s ease;
+      display:flex; flex-direction:column; min-height: 300px;
+    }
+    .team-card:hover{ transform: translateY(-6px); box-shadow: 0 16px 38px rgba(0,0,0,.24); }
+
+    .team-card__photo{ width:100%; height: 220px; object-fit: cover; display:block; }
+    .team-card__body{ padding:16px 18px 18px; display:flex; flex-direction:column; gap:10px; }
+    .team-card__name{ margin:0; font-weight:800; font-size:20px; line-height:1.2; }
+    .team-card__role{ margin:0; opacity:.9; font-size:15px; }
+    .team-card__tags{ display:flex; flex-wrap:wrap; gap:8px; }
+    .team-tag{
+      font-size: 12px; background: rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.22); color:#fff;
+      padding:6px 10px; border-radius:999px;
+    }
+    .team-card__actions{ margin-top:auto; display:flex; gap:10px; flex-wrap:wrap; }
+
+    /* Boutons cartes équipe (zoom léger) */
+    .btn, .btn--ghost, .btn--white{
+      text-decoration:none; font-weight:700; padding:10px 14px; border-radius:12px;
+      transition: transform .25s ease, background .25s ease, color .25s ease, box-shadow .25s ease;
+    }
+    .btn--ghost{ background: rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.25); }
+    .btn--ghost:hover{ transform: scale(1.06); background: rgba(255,255,255,.18); }
+    .btn--white{ background:#fff; color:#3B28CC; box-shadow:0 6px 14px rgba(0,0,0,.12); }
+    .btn--white:hover{ transform: scale(1.06); box-shadow:0 10px 20px rgba(0,0,0,.16); }
+    .btn--alt{ background:#ADD7F6; color:#3B28CC; }
+    .btn--alt:hover{ transform: scale(1.06); }
+
+    /* ====== Nuages 3D derrière (flottants) ====== */
+    .cloud-3d{
+      position: absolute;
+      z-index: 1;               /* derrière les cartes */
+      pointer-events: none;     /* ignore la souris */
+      cursor: default;
+      animation: floaty 7s ease-in-out infinite;
+      opacity: .98;
+    }
+    @keyframes floaty{
+      0%   { transform: translateY(0) rotateZ(0deg); }
+      50%  { transform: translateY(-10px) rotateZ(0.4deg); }
+      100% { transform: translateY(0) rotateZ(0deg); }
+    }
+    .cloud-3d--1{ right: 4%;  bottom: -20px; width: 460px; height: 340px; animation-delay: 0s; }
+    .cloud-3d--2{ left:  -60px; top:  80px;  width: 320px; height: 220px; animation-delay: .6s; }
+    .cloud-3d--3{ left:  34%;  bottom: -30px; width: 280px; height: 200px; animation-delay: 1.2s; }
+    .cloud-3d--4{ right: -10px; top: 140px;  width: 260px; height: 180px; animation-delay: .3s; }
+    .cloud-3d--5{ right: 1100px; top: 500px;  width: 260px; height: 180px; animation-delay: 4.5s; }
+    .cloud-3d--6{ right: 70px; top: 400px;  width: 290px; height: 280px; animation-delay: .9s; }
+
+    @media (max-width: 720px){
+      .cloud-3d--1{ right: 50%; transform: translateX(50%); width: 280px; height: 180px; bottom: -10px; }
+      .cloud-3d--2{ left: -40px;  top: 20px; width: 220px; height: 150px; }
+      .cloud-3d--3{ left: 20%;   bottom: -20px; width: 220px; height: 150px; }
+      .cloud-3d--4{ right: -40px; top: 120px; width: 200px; height: 140px; }
+      .cloud-3d--5{ right: 1100px; top: 500px;  width: 260px; height: 180px; animation-delay: 4.5s; }
+      .cloud-3d--6{ right: 70px; top: 500px;  width: 290px; height: 280px; animation-delay: .2s; }
+    }
+
+    /* ====== SECTION SPÉCIALISATION ====== */
+    .specialite-section{ padding:80px 20px;}
+    .specialisation-title{
+      font-size: clamp(36px, 4.5vw, 56px);
+      font-weight: 800; text-align:center;
+  background: linear-gradient(135deg, #87BFFF, #3B28CC);
+margin-bottom: 40px;
+    }
+    .specialite-container{
+      display:flex; justify-content:center; align-items:flex-start; gap:60px; flex-wrap:wrap;
+    }
+    .specialite-3d{ width:400px; height:400px; }
+    .specialite-cards{
+      display:grid; grid-template-columns: repeat(3, minmax(260px,1fr));
+      column-gap: 48px; row-gap: 28px; justify-content:center; padding:6px 8px;
+    }
+    .card{
+      position:relative; background:#3B28CC; color:#fff;
+      padding:20px; border-radius:15px; width:280px; height:280px;
+      overflow:hidden; cursor:pointer;
+      transition: transform .3s ease, box-shadow .3s ease;
+      box-shadow: 0 8px 20px rgba(0,0,0,.18);
+    }
+    .card:hover{ transform: scale(1.08); box-shadow:0 12px 28px rgba(0,0,0,.28); }
+    .card h4{
+      margin:0; color:#fff; font-weight:900; text-align:left; line-height:1.2;
+      display:flex; align-items:flex-start; justify-content:flex-start;
+      padding:20px; font-size: clamp(15px, 3.4vw, 25px); letter-spacing:.5px;
+      word-break: break-word; overflow-wrap: break-word;
+    }
+    .card p{
+      position:absolute; bottom:-100%; left:0; right:0; padding:15px;
+      background: rgba(0,0,0,.6); font-size:14px; transition: bottom .4s ease;
+    }
+    .card:hover p{ bottom:0; }
+
+    /* ====== Section titre / infos ====== */
+    .titre-section{ text-align:center; padding: 60px 20px 70px; }
+    .titre-section h1{ font-size: clamp(36px, 5vw, 56px); font-weight: 800; color:#1D1E18; }
+    .infos{
+            background: linear-gradient(135deg, #87BFFF, #3B28CC); padding:40px 20px; text-align:center; color:#1E2D2F;
+    }
+    .infos h2{ color:#3B28CC; margin-bottom:20px; }
+    .infos p{ margin:10px 0; font-size:16px; }
+
+
+
+    /* Nuage derrière le titre */
+.titre-section { position: relative; }
+
+.cloud-title {
+  position: absolute;
+  top: 90%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 420px; height: 300px;
+  z-index: 0;            /* derrière */
+  pointer-events: none;  /* ne capte pas la souris */
+  opacity: .95;
+}
+
+.titre-section h1 { position: relative; z-index: 2; }
+
+.btn-rdv,
+.rdv-container { position: relative; z-index: 3; }  /* bouton tout devant */
+
+
+/* Cache la barre de progression de <model-viewer> partout */
+model-viewer::part(progress-bar) { 
+  display: none !important;
+}
+
+/* (Optionnel) au cas où sur certaines versions */
+model-viewer::part(default-progress-bar) {
+  display: none !important;
+}
+
+
+
+.big-title {
+  font-size: 6rem;          /* très grand */
+  font-weight: 1100;         /* bien gras */
+  text-transform: uppercase; /* tout en majuscules */
+  margin: 60px 0 30px 40px;  /* descend un peu et espace à gauche */
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: all 1s ease-out;
+  text-align:left;
+}
+
+/* quand visible à l’écran */
+.big-title.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.big-title.main-title {
+  font-size: 6rem;     /* plus grand que le 6rem actuel */
+  margin-left: 40px;   /* conserve ton décalage */
+}
+
+
+/* Rangée titre + bouton */
+.hero-row{
+  display: flex;
+  align-items: center;        /* même hauteur */
+  gap: 24px;
+  margin: 80px 40px 20px;     /* aligne avec ton titre à gauche */
+  flex-wrap: wrap;            /* passe à la ligne sur mobile */
+}
+
+/* Bouton utilisé à côté du titre */
+/* ---- Effet zoom + rebond sur le bouton RDV ---- */
+
+/* base (si tu l’as déjà, garde le tien) */
+/* === Zoom léger + halo blanc au survol pour le bouton à côté du titre === */
+.btn-rdv.btn-rdv--hero {
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  transform-origin: center;
+  will-change: transform, box-shadow;
+}
+
+.btn-rdv.btn-rdv--hero:hover,
+.btn-rdv.btn-rdv--hero:focus-visible {
+  transform: scale(1.05);               /* zoom très léger */
+  box-shadow: 0 0 22px rgba(255,255,255,.9),
+              0 10px 22px rgba(0,0,0,.25); /* halo + ombre */
+  filter: brightness(1.06);
+}
+
+.btn-rdv.btn-rdv--hero:active {
+  transform: scale(0.98);
+  box-shadow: 0 6px 14px rgba(0,0,0,.25);
+}
+
+/* Respect accessibilité */
+@media (prefers-reduced-motion: reduce){
+  .btn-rdv.btn-rdv--hero { transition: none !important; }
+}
+
+/* Animation apparition de droite vers la gauche */
+.reveal-right {
+  opacity: 0;
+  transform: translateX(120px); /* décalé à droite */
+  transition: opacity 0.8s ease, transform 1.5s ease;
+}
+
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0); /* revient à sa place */
+}
+
+
+/* remplace l'actuel .infos {...} par : */
+.infos{
+  background: transparent;               /* on laisse voir le gradient global */
+  padding: 50px 20px;
+}
+
+/* carte colorée + lisible */
+.infos__card{
+  max-width: 960px;
+  margin: 0 auto;
+  background: #D9FFF5;                   /* <<< couleur claire (menthe) */
+  color: #1D1E18;
+  border-radius: 16px;
+  padding: 28px 32px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.18);
+  text-align: center;
+}
+
+/* titre dans la carte */
+.infos__card h2{
+  color: #0E7490;                         /* bleu canard doux */
+  margin-bottom: 18px;
+  letter-spacing: .3px;
+}
+
+/* lignes d'infos */
+.infos__card p{
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+/* optionnel : petits tags forts plus lisibles */
+.infos__card p strong{
+  color: #0B3C49;
+}
+
+/* hover subtil si tu veux rendre la carte interactive */
+.infos__card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(0,0,0,.22);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.info-box {
+  background: #3B28CC; /* Violet */
+  color: white;
+  padding: 60px;
+  border-radius: 20px;
+  text-align: center;
+
+  width: 100%;
+  max-width: 1440px;
+  margin: 10px auto;
+  font-size: 1.3rem;
+
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.7), 
+              0 0 50px rgba(59, 40, 204, 0.7); /* blanc + violet */
+  animation: glowGradient 4s ease-in-out infinite;
+}
+
+/* Animation halo dégradé blanc-violet */
+@keyframes glowGradient {
+  0% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6),
+                0 0 40px rgba(59, 40, 204, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 255, 255, 1),
+                0 0 70px rgba(59, 40, 204, 0.9);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6),
+                0 0 40px rgba(59, 40, 204, 0.6);
+  }
+}
+footer {
+  background: linear-gradient(145deg, #3B28CC, #2A1F99); /* Dégradé violet */
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 40px;
+  border-radius: 15px 15px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Halo animé autour du footer */
+footer::before {
+  content: "";
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  height: 120px;
+  background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+  filter: blur(30px);
+  animation: haloFooter 6s infinite ease-in-out alternate;
+}
+
+@keyframes haloFooter {
+  0% { transform: translateX(-50%) scale(1); opacity: 0.7; }
+  100% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+}
+
+.footer-links {
+  margin: 15px 0;
+}
+
+.footer-links a {
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0 10px;
+  transition: 0.3s;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+  color: #ffffff;
+}
+
+copyright {
+  margin-top: 15px;
+  font-size: 0.85rem;
+  color: #bbb;
+}
+  </style>
+
+  <!-- model-viewer -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body>
+
+  <!-- ====== NAV ====== -->
+  <nav class="navbar">
+    <div class="logo">Cabinet Médical</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="a-propos.html">Kiné & Art</a></li>
+      <li class="dropdown">
+        <a href="#equipe">Équipe</a>
+        <ul class="dropdown-menu">
+          <li><a href="florence.html">Florence Fratte</a></li>
+          <li><a href="lauriane.html">Lauriane Brodier</a></li>
+          <li><a href="anne-claire.html">Anne-Claire Kuntz</a></li>
+          <li><a href="marion.html">Marion Rapin</a></li>
+        </ul>
+      </li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <!-- ====== CAROUSEL ====== -->
+    <div class="carousel">
+      <img src="images/acceuil.webp" class="active" alt="Cabinet 1">
+      <img src="images/cabinet.webp" alt="Cabinet 2">
+      <img src="images/florenceSalle.webp" alt="Cabinet 3">
+    </div>
+
+    <!-- ====== ÉQUIPE (désormais AVANT la spécialisation) ====== -->
+    <section class="team" id="equipe" aria-label="Notre équipe">
+      <h2 class="team__title reveal-left">Notre équipe</h2>
+
+      <div class="team__grid">
+        <!-- Florence -->
+        <article class="team-card">
+          <img class="team-card__photo" src="images/florence.webp" alt="Florence Fratte, kinésithérapeute">
+          <div class="team-card__body">
+            <h3 class="team-card__name">Florence Fratte</h3>
+            <p class="team-card__role">Kinésithérapeute – Kiné du sport</p>
+            <div class="team-card__tags">
+              <span class="team-tag">Réathlétisation</span>
+              <span class="team-tag">Prévention</span>
+              <span class="team-tag">Post-trauma</span>
+            </div>
+            <div class="team-card__actions">
+              <a class="btn btn--white" href="contact.html">Prendre RDV</a>
+              <a class="btn btn--ghost" href="tel:+33390206489">Contacter</a>
+              <a class="btn btn--alt" href="florence.html">En savoir plus</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Lauriane -->
+        <article class="team-card">
+          <img class="team-card__photo" src="images/florence.webp" alt="Lauriane Brodier, kinésithérapeute">
+          <div class="team-card__body">
+            <h3 class="team-card__name">Lauriane Brodier</h3>
+            <p class="team-card__role">Rééducation fonctionnelle</p>
+            <div class="team-card__tags">
+              <span class="team-tag">Posture</span>
+              <span class="team-tag">Rachis</span>
+              <span class="team-tag">Renfo</span>
+            </div>
+            <div class="team-card__actions">
+              <a class="btn btn--white" href="contact.html">Prendre RDV</a>
+              <a class="btn btn--ghost" href="tel:+33390206489">Contacter</a>
+              <a class="btn btn--alt" href="lauriane.html">En savoir plus</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Marion -->
+        <article class="team-card">
+          <img class="team-card__photo" src="images/florence.webp" alt="Marion Rapin, kinésithérapeute">
+          <div class="team-card__body">
+            <h3 class="team-card__name">Marion Rapin</h3>
+            <p class="team-card__role">Thérapie respiratoire</p>
+            <div class="team-card__tags">
+              <span class="team-tag">BPCO</span>
+              <span class="team-tag">Asth./ventilation</span>
+              <span class="team-tag">Post-COVID</span>
+            </div>
+            <div class="team-card__actions">
+              <a class="btn btn--white" href="contact.html">Prendre RDV</a>
+              <a class="btn btn--ghost" href="tel:+33390206489">Contacter</a>
+              <a class="btn btn--alt" href="marion.html">En savoir plus</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Anne-Claire -->
+        <article class="team-card">
+          <img class="team-card__photo" src="images/florence.webp" alt="Anne-Claire Kuntz, kinésithérapeute">
+          <div class="team-card__body">
+            <h3 class="team-card__name">Anne-Claire Kuntz</h3>
+            <p class="team-card__role">Thérapie respiratoire</p>
+            <div class="team-card__tags">
+              <span class="team-tag">BPCO</span>
+              <span class="team-tag">Asth./ventilation</span>
+              <span class="team-tag">Post-COVID</span>
+            </div>
+            <div class="team-card__actions">
+              <a class="btn btn--white" href="contact.html">Prendre RDV</a>
+              <a class="btn btn--ghost" href="tel:+33390206489">Contacter</a>
+              <a class="btn btn--alt" href="anne-claire.html">En savoir plus</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Nuages 3D décoratifs derrière/à côté des cartes -->
+      <model-viewer class="cloud-3d cloud-3d--1"
+        src="models/nuage.glb" alt="Nuage décoratif"
+        interaction-prompt="none" disable-zoom
+        camera-orbit="0deg 75deg 200m" field-of-view="100deg"
+        min-field-of-view="50deg" max-field-of-view="45deg" exposure="1.1"
+        poster="images/cabinet.webp"></model-viewer>
+
+      <model-viewer class="cloud-3d cloud-3d--2"
+        src="models/nuage.glb" alt="Nuage décoratif"
+        interaction-prompt="none" disable-zoom
+        camera-orbit="0deg 75deg 200m" field-of-view="100deg"
+        min-field-of-view="50deg" max-field-of-view="45deg" exposure="1.1"
+        poster="images/cabinet.webp"></model-viewer>
+
+      <model-viewer class="cloud-3d cloud-3d--3"
+        src="models/nuage.glb" alt="Nuage décoratif"
+        interaction-prompt="none" disable-zoom
+        camera-orbit="0deg 75deg 200m" field-of-view="100deg"
+        min-field-of-view="50deg" max-field-of-view="45deg" exposure="1.1"
+        poster="images/cabinet.webp"></model-viewer>
+
+      <model-viewer class="cloud-3d cloud-3d--4"
+        src="models/nuage.glb" alt="Nuage décoratif"
+        interaction-prompt="none" disable-zoom
+        camera-orbit="0deg 75deg 200m" field-of-view="100deg"
+        min-field-of-view="50deg" max-field-of-view="45deg" exposure="1.1"
+        poster="images/cabinet.webp"></model-viewer>
+
+      <model-viewer class="cloud-3d cloud-3d--5"
+        src="models/nuage.glb" alt="Nuage décoratif"
+        interaction-prompt="none" disable-zoom
+        camera-orbit="0deg 75deg 200m" field-of-view="100deg"
+        min-field-of-view="50deg" max-field-of-view="45deg" exposure="1.1"
+        poster="images/cabinet.webp"></model-viewer>
+
+              <model-viewer class="cloud-3d cloud-3d--6"
+        src="models/montgolfiere.glb" alt="Nuage décoratif"
+        auto-rotate interaction-prompt="none" disable-zoom
+        camera-orbit="0deg 75deg 200m" field-of-view="100deg"
+        min-field-of-view="55deg" max-field-of-view="45deg" exposure="1.1"
+        poster="images/cabinet.webp"></model-viewer>
+    </section>
+
+    <!-- ====== SPÉCIALISATION (désormais APRÈS l’équipe) ====== -->
+    <section class="specialite-section" aria-label="Spécialisation et modèle 3D">
+      <h2 class="big-title">SPÉCIALISATION</h2>
+
+      <div class="specialite-container">
+        <model-viewer
+          class="specialite-3d"
+          src="models/monmodel.glb"
+          alt="Modèle 3D du cabinet"
+          auto-rotate
+          camera-controls
+          camera-orbit="0deg 75deg 200m"
+          field-of-view="100deg"
+          min-field-of-view="50deg"
+          max-field-of-view="45deg"
+          exposure="1.1"
+          disable-zoom
+          poster="images/cabinet.webp">
+        </model-viewer>
+
+        <div class="specialite-cards">
+          <div class="card">
+            <h4>Kinésithérapie<br>du<br>sport</h4>
+            <p>Réathlétisation, prévention des blessures et suivi post-traumatique.</p>
+          </div>
+          <div class="card">
+            <h4>Rééducation<br>fonctionnelle</h4>
+            <p>Travail postural, douleurs lombaires/cervicales, renforcement musculaire.</p>
+          </div>
+          <div class="card">
+            <h4>Thérapie<br>respiratoire</h4>
+            <p>BPCO, asthme, post-COVID et amélioration de la ventilation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== Titre + CTA ====== -->
+<section class="titre-section">
+  <div class="hero-row">
+    <h1 class="big-title main-title reveal-left">CABINET MÉDICAL</h1>
+    <a href="contact.html" class="btn-rdv btn-rdv--hero reveal-right">Prendre Rendez-vous</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <p><strong>Cabinet Médical</strong> – 9 rue du Marais Vert, 67000 Strasbourg</p>
+    <p>Tél :+33 03 90 20 64 89</p>
+    
+    <div class="footer-links">
+      <a href="#">Mentions légales</a> | 
+      <a href="#">Politique de confidentialité</a> | 
+      <a href="https://goo.gl/maps/xxxx" target="_blank">Itinéraire Google Maps</a>
+    </div>
+    
+    <p class="copyright">© 2025 Cabinet Médical – Tous droits réservés</p>
+  </div>
+</footer>
+  </main>
+
+  <!-- ====== SCRIPT CAROUSEL ====== -->
+  <script>
+  (function(){
+    const els = document.querySelectorAll('.reveal-left');
+    if(!('IntersectionObserver' in window) || !els.length) {
+      els.forEach(el => el.classList.add('in')); // fallback
+      return;
+    }
+    const io = new IntersectionObserver((entries, obs)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          obs.unobserve(entry.target); // joue une seule fois
+        }
+      });
+    }, { root: null, threshold: 0.2 });
+    els.forEach(el => io.observe(el));
+  })();
+  document.addEventListener("DOMContentLoaded", () => {
+  const titles = document.querySelectorAll('.big-title');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  titles.forEach(title => observer.observe(title));
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const titles = document.querySelectorAll('.big-title');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  titles.forEach(title => observer.observe(title));
+});
+</script>
+<script>
+  // Carousel (inchangé)
+  const images = document.querySelectorAll('.carousel img');
+  let index = 0;
+  setInterval(() => {
+    images[index].classList.remove('active');
+    index = (index + 1) % images.length;
+    images[index].classList.add('active');
+  }, 3000);
+
+  // Animations au scroll
+  document.addEventListener('DOMContentLoaded', () => {
+    // Pour .reveal-left et .reveal-right -> ajout de .in
+    const ioSlide = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.reveal-left, .reveal-right').forEach(el => ioSlide.observe(el));
+
+    // Pour .big-title -> ajout de .visible (si tu veux garder l’anim du titre aussi)
+    const ioTitle = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.big-title').forEach(el => ioTitle.observe(el));
+  });
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.querySelector(".reveal-right");
+
+  function checkScroll() {
+    const rect = btn.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 100) {
+      btn.classList.add("visible");
+      window.removeEventListener("scroll", checkScroll);
+    }
+  }
+
+  window.addEventListener("scroll", checkScroll);
+  checkScroll(); // au cas où il est déjà visible au chargement
+});
+</script>
+</body>
+</html>
