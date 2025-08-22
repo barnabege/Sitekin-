@@ -130,4 +130,97 @@ main, .content {
   margin-bottom: 20px;
   color: #3B28CC; /* Chrysler Blue */
 }
+/* ===========================
+   MOBILE ONLY (≤ 768px)
+   =========================== */
+@media (max-width: 768px) {
+  /* Navigation */
+  .navbar { padding: 14px 16px; }
+  .logo { font-size: 1rem; }
+  .nav-links { gap: 10px; flex-wrap: wrap; }
+  .nav-links a { padding: 6px 8px; font-size: 14px; }
 
+  /* Carrousel de la home */
+  .carousel { height: 45vh; min-height: 240px; }
+  .carousel img { height: 45vh; object-fit: cover; object-position: center; }
+
+  /* Titre + bouton de la home */
+  .hero-row { margin: 24px 16px; gap: 16px; }
+  .big-title,
+  .big-title.main-title { 
+    margin: 0 0 6px 0; 
+    font-size: clamp(28px, 9vw, 42px); 
+    text-align: left;
+  }
+  .btn-rdv { 
+    width: 100%; 
+    text-align: center; 
+    padding: 16px 18px; 
+    font-size: 18px; 
+    border-radius: 16px; 
+    margin-top: 4px;
+  }
+
+  /* Section équipe (grille → 1 colonne) */
+  .team { padding: 32px 12px; }
+  .team__title { 
+    margin: 0 0 16px 4px; 
+    font-size: clamp(28px, 9vw, 40px); 
+  }
+  .team__grid { 
+    display: grid; 
+    grid-template-columns: 1fr; 
+    gap: 16px; 
+    max-width: 600px; 
+  }
+  .team-card__photo { height: 180px; }
+
+  /* Nuages/éléments 3D très lourds → on limite sur mobile */
+  .cloud-3d--1, .cloud-3d--2, .cloud-3d--4 { display: none; }
+  .cloud-3d--3, .cloud-3d--6 { opacity: .85; }
+
+  /* Section “SPÉCIALISATION” */
+  .specialite-section { padding: 36px 12px; }
+  .specialite-3d { width: 100%; height: 300px; }
+  .specialite-container { gap: 24px; }
+  .specialite-cards { grid-template-columns: 1fr; row-gap: 16px; }
+  .card { width: 100%; height: auto; min-height: 160px; }
+  .card h4 { padding: 14px; font-size: clamp(16px, 5.2vw, 20px); }
+  .card p { position: static; background: transparent; padding: 0 14px 14px; }
+
+  /* Boîtes d’infos (toutes pages) */
+  .info-box, .specialites-box { width: 100% !important; padding: 20px; font-size: 16px; }
+
+  /* Pages profils (Florence, Anne-Claire, Marion, etc.) */
+  .page-content { 
+    flex-direction: column; 
+    padding: 24px 12px; 
+    gap: 16px; 
+  }
+  .left-column { gap: 16px; }
+  .florence-content { align-items: center; gap: 12px; }
+  .florence-img { width: 96px; height: 96px; }
+
+  /* Contact */
+  .container, .contact-wrapper { padding: 12px; }
+  .contact-wrapper { flex-direction: column; gap: 16px; }
+  .map-container { max-width: none; }
+  .map-container iframe { height: 320px; }
+  .contact-image { height: 150px; }
+  .contact-info h2 { font-size: 24px; }
+  .info-list { max-width: 100%; }
+  .info-pill { padding: 12px; }
+
+  /* Footer */
+  footer { padding: 24px 12px; }
+  .footer-links { line-height: 1.8; }
+}
+
+/* MICRO-MOBILE (≤ 480px) : petits affinages */
+@media (max-width: 480px) {
+  .nav-links { justify-content: flex-start; }
+  .card h4 br { display: none; } /* évite les sauts de ligne forcés très serrés */
+}
+/* Par défaut (desktop) */
+.desktop-only { display: block; }
+.mobile-only  { display: none; }

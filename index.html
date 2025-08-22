@@ -5,6 +5,8 @@
   <title>Cabinet Médical</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="preconnect" href="https://unpkg.com" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-mobile.css" media="(max-width: 768px)">
   <style>
     /* ====== Réglages généraux ====== */
     html { scroll-behavior: smooth; }
@@ -80,6 +82,7 @@
       opacity: 0; transition: opacity 1s ease-in-out;
     }
     .carousel img.active{ opacity: 1; }
+
 
     /* ====== Bouton RDV (héros) ====== */
     .btn-rdv{
@@ -508,11 +511,19 @@ copyright {
 
   <main>
     <!-- ====== CAROUSEL ====== -->
+<<<<<<< HEAD
     <div class="carousel">
       <img src="images/acceuil.jpg" class="active" alt="Cabinet 1">
       <img src="images/cabinet.jpg" alt="Cabinet 2">
       <img src="images/florenceSalle.jpg" alt="Cabinet 3">
     </div>
+=======
+<div class="carousel">
+  <img src="images/image1.webp"       alt="Cabinet 1" class="active" loading="eager">
+  <img src="images/image2.webp"       alt="Cabinet 2" loading="lazy">
+  <img src="images/image3.webp" alt="Cabinet 3" loading="lazy">
+</div>
+>>>>>>> 54ea7d0 (Mise à jour du site (CSS mobile, images, pages contact & a-propos))
 
     <!-- ====== ÉQUIPE (désormais AVANT la spécialisation) ====== -->
     <section class="team" id="equipe" aria-label="Notre équipe">
@@ -801,3 +812,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </body>
 </html>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 54ea7d0 (Mise à jour du site (CSS mobile, images, pages contact & a-propos))

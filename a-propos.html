@@ -1,62 +1,61 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Expositions au Cabinet</title>
 
   <!-- Police Montserrat (moderne) -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style-mobile.css" media="(max-width: 768px)" />
 
   <style>
-    body {
+    /* ========= Base ========= */
+    body{
       background: linear-gradient(135deg, #87BFFF, #3B28CC);
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
     }
-
-    h1, h2, h3 {
+    h1, h2, h3{
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
       color: #222;
     }
 
-    /* ✅ Animation du titre */
-.page-title {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
-  font-size: 60px; /* 🔥 même taille que NOTRE ÉQUIPE */
-  color: #111; /* noir profond */
-  margin: 20px 0 30px 0px; /* espace haut + décalage gauche */
-  text-align: left;
-  position: relative;
-    text-transform: uppercase;
-  opacity: 0;
-  transform: translateX(-100%);
-  animation: slideIn 1.8s ease-out forwards;
-}
+    /* Titre animé */
+    .page-title{
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 60px;
+      color: #111;
+      margin: 20px 0 30px 0px;
+      text-align: left;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateX(-100%);
+      animation: slideIn 1.8s ease-out forwards;
+    }
+    @keyframes slideIn{
+      to{ transform: translateX(0); opacity: 1; }
+    }
 
-/* Animation */
-@keyframes slideIn {
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-    .page-content {
+    .page-content{
       height: 100vh;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
-      padding-top: -80px;
     }
 
-    .gallery {
+    /* ====== Grille desktop ====== */
+    .desktop-only{ display: block; }
+    .mobile-only{ display: none; }
+
+    .gallery{
       flex: 1;
       display: flex;
       justify-content: center;
@@ -69,67 +68,98 @@
       position: relative;
       margin-top: 10px;
     }
-
-    .art-card {
+    .art-card{
       position: relative;
-      height: calc(100vh - 210px);
+      height: calc(100vh - 160px);
       flex: 1;
       min-width: 300px;
       max-width: 400px;
       border-radius: 12px;
-      background-color: white;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(0,0,0,.2);
       overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.4s ease, filter 0.3s ease;
+      transition: transform .4s ease, filter .3s ease;
       border-left: 8px solid #2667FF;
       text-decoration: none;
       color: inherit;
     }
-
-    .art-card:hover {
-      transform: scale(1.05);
-      filter: brightness(0.95) saturate(1.1);
+    .art-card:hover{ transform: scale(1.05); filter: brightness(.95) saturate(1.1); }
+    .art-card img{ flex: 1; width: 100%; object-fit: cover; display: block; }
+    .art-card .details{ padding: 20px; background: #fff; }
+    .art-card h3{ font-size: 18px; margin: 0 0 10px; color: #003c47; }
+    .art-card p{ font-size: 14px; color: #555; margin: 5px 0; }
+    .ribbon{
+      position: absolute; top: 10px; left: -20px;
+      background: #3B28CC; color: #fff; padding: 5px 20px;
+      transform: rotate(-45deg); font-size: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,.2); z-index: 10;
     }
 
-    .art-card img {
-      flex: 1;
-      width: 100%;
-      object-fit: cover;
-      display: block;
+    /* ====== Desktop force (≥769px) ====== */
+    @media (min-width: 769px){
+      .desktop-only{ display: block !important; }
+      .mobile-only{ display: none !important; }
+
+      .gallery{
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(280px, 1fr)) !important;
+        gap: 30px !important;
+        width: min(1200px, 92vw) !important;
+        margin: 10px auto 0 !important;
+        overflow: visible !important;
+      }
+      .art-card{
+        height: auto !important;
+        max-width: none !important;
+        flex: 0 1 auto !important;
+      }
     }
 
-    .art-card .details {
-      padding: 20px;
-      background-color: white;
+    /* ====== Carrousel mobile en FONDU (≤768px) ====== */
+    @media (max-width: 768px){
+      .desktop-only{ display: none; }
+      .mobile-only{ display: block; }
+
+      .expo-carousel{ margin-top: 100px; padding: 10px 0; }
+
+      .expo-viewport{
+        width: 90vw; height: 56vh; margin: 0 auto;
+        overflow: hidden; border-radius: 16px;
+        box-shadow: 0 10px 24px rgba(255, 255, 255, 0.706);
+        background: #0F3E66;
+        position: relative;              /* nécessaire pour .expo-slide absolute */
+      }
+
+      /* plus de flex + translateX : on empile les slides */
+      .expo-track{
+        position: relative;
+        width: 100%; height: 100%;
+      }
+
+      .expo-slide{
+        position: absolute;
+        inset: 0;                        /* top/right/bottom/left: 0 */
+        opacity: 0;
+        transition: opacity 1s ease;     /* durée du fondu */
+      }
+      .expo-slide.active{ opacity: 1; }  /* la slide visible */
+
+      .expo-slide img{
+        width: 100%; height: 100%;
+        object-fit: cover;               /* change en 'contain' si tu veux tout voir */
+        display: block; background: #0F3E66;
+      }
+
+      /* Points (optionnels) */
+      .expo-dots{ display: flex; gap: 8px; justify-content: center; margin-top: 10px; }
+      .expo-dot{ width: 8px; height: 8px; border-radius: 50%; background: #9aa4ff; opacity: .45; }
+      .expo-dot.is-active{ opacity: 1; }
     }
 
-    .art-card h3 {
-      font-size: 18px;
-      margin: 0 0 10px;
-      color: #003c47;
-    }
-
-    .art-card p {
-      font-size: 14px;
-      color: #555;
-      margin: 5px 0;
-    }
-
-    .ribbon {
-      position: absolute;
-      top: 10px;
-      left: -20px;
-      background: #3B28CC;
-      color: white;
-      padding: 5px 20px;
-      transform: rotate(-45deg);
-      font-size: 12px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      z-index: 10;
-    }
+    
   </style>
 </head>
 <body>
@@ -154,11 +184,13 @@
 
   <!-- CONTENU PRINCIPAL -->
   <main class="page-content">
-    <h1 class="page-title">Expositions artistiques au cabinet</h1>
-    <div class="gallery">
+    <h1 class="page-title">Kiné & Art</h1>
+
+    <!-- Version PC -->
+    <div class="gallery desktop-only">
       <a href="expo1.html" class="art-card">
         <div class="ribbon">Exposition</div>
-        <img src="images/kine1.webp" alt="Tableau 1">
+        <img src="images/kine1.webp" alt="Tableau 1" />
         <div class="details">
           <h3>"Reflets Urbains"</h3>
           <p>🗓 Exposé en mars 2024</p>
@@ -167,7 +199,7 @@
       </a>
       <a href="expo2.html" class="art-card">
         <div class="ribbon">Exposition</div>
-        <img src="images/kine2.webp" alt="Peinture abstraite">
+        <img src="images/kine2.webp" alt="Peinture abstraite" />
         <div class="details">
           <h3>"Énergie et mouvement"</h3>
           <p>🗓 Exposé en juin 2024</p>
@@ -176,7 +208,7 @@
       </a>
       <a href="expo3.html" class="art-card">
         <div class="ribbon">Exposition</div>
-        <img src="images/kine3.webp" alt="Art nature">
+        <img src="images/kine3.webp" alt="Art nature" />
         <div class="details">
           <h3>"Évasion florale"</h3>
           <p>🗓 Exposé en septembre 2023</p>
@@ -184,6 +216,50 @@
         </div>
       </a>
     </div>
+
+    <!-- Version Mobile (fondu) -->
+    <section class="mobile-only expo-carousel" aria-label="Expositions (mobile)">
+      <div class="expo-viewport">
+        <div class="expo-track">
+          <div class="expo-slide"><img src="images/Musee1.png" alt="Expo 1" /></div>
+          <div class="expo-slide"><img src="images/Musee2.png" alt="Expo 2" /></div>
+          <div class="expo-slide"><img src="images/Musee3.png" alt="Expo 3" /></div>
+        </div>
+      </div>
+
+      <!-- Points (optionnels) -->
+      <div class="expo-dots" aria-hidden="true">
+        <span class="expo-dot is-active"></span>
+        <span class="expo-dot"></span>
+        <span class="expo-dot"></span>
+      </div>
+    </section>
   </main>
+
+  <!-- JS : diaporama en fondu (mobile seulement) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (!window.matchMedia("(max-width: 768px)").matches) return;
+
+      const slides = Array.from(document.querySelectorAll(".expo-slide"));
+      const dots   = Array.from(document.querySelectorAll(".expo-dot"));
+      if (!slides.length) return;
+
+      let index = 0;
+
+      const show = (n) => {
+        slides.forEach((s, i) => s.classList.toggle("active", i === n));
+        dots.forEach((d, i) => d.classList.toggle("is-active", i === n));
+      };
+
+      show(index);
+
+      // Vitesse d’enchaînement (ms) — mets 4000 / 5000 pour plus lent.
+      setInterval(() => {
+        index = (index + 1) % slides.length;
+        show(index);
+      }, 3000);
+    });
+  </script>
 </body>
 </html>

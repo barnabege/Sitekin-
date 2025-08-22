@@ -1,0 +1,942 @@
+/* ====== RÈGLES GLOBALES MOBILE (≤768px) ====== */
+@media (max-width: 768px){
+
+  /* Pas de scroll horizontal parasite */
+  html, body{
+    overflow-x: hidden !important;
+  }
+
+  /* -------- NAVBAR -------- */
+  .navbar{
+    position: sticky; /* reste en haut */
+    top: 0;
+    z-index: 1000;
+    padding: 12px 16px !important;
+    flex-direction: column;          /* logo au-dessus du menu */
+    gap: 8px;
+  }
+  .logo{ font-size: 16px !important; }
+
+  .nav-links{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;                 /* passe à la ligne si besoin */
+    gap: 10px 14px;
+  }
+  .nav-links a{
+    font-size: 13px !important;
+    padding: 6px 8px !important;
+  }
+
+  /* -------- CAROUSEL / HÉRO -------- */
+  .carousel{
+    height: 42vh !important;         /* au lieu de 650px */
+    min-height: 260px;
+    max-height: 420px;
+  }
+  .carousel img{
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    position: absolute;
+    top: 0; left: 0;
+  }
+
+  /* Titre + bouton RDV */
+  .hero-row{
+    margin: 28px 16px 10px !important;
+    gap: 12px !important;
+    justify-content: center;
+  }
+  .big-title{
+    margin: 0 0 8px 0 !important;
+    text-align: center !important;
+    font-size: clamp(34px, 10.5vw, 52px) !important;
+  }
+  .btn-rdv{
+    padding: 12px 16px !important;
+    font-size: 16px !important;
+    border-radius: 14px !important;
+  }
+
+  /* -------- ÉQUIPE -------- */
+  .team{
+    padding: 40px 14px !important;
+  }
+  .team__title{
+    text-align: center !important;
+    margin: 0 0 16px 0 !important;
+    font-size: clamp(28px, 9vw, 44px) !important;
+  }
+  .team__grid{
+    max-width: 560px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr !important; /* 1 colonne */
+    gap: 14px !important;
+  }
+  .team-card{ min-height: auto !important; }
+  .team-card__photo{ height: 180px !important; }
+
+  /* -------- NUAGES / 3D --------
+     (pour éviter les débordements et améliorer perf) */
+  .cloud-3d{ display: none !important; }
+
+  /* -------- SPÉCIALISATION -------- */
+  .specialite-section{ padding: 40px 16px !important; }
+
+  .specialite-3d{
+    width: 100% !important;
+    max-width: 520px;
+    height: 260px !important;
+  }
+
+  .specialite-cards{
+    grid-template-columns: 1fr !important; /* 1 carte par ligne */
+    gap: 14px !important;
+    padding: 0 !important;
+    width: 100%;
+  }
+  .card{
+    width: 100% !important;
+    min-height: 160px;
+    height: auto !important;
+    padding: 16px !important;
+  }
+  .card h4{
+    padding: 10px 12px !important;
+    font-size: clamp(14px, 4.2vw, 20px) !important;
+  }
+
+  /* -------- BLOC INFOS / FOOTER -------- */
+  .infos{ padding: 28px 14px !important; }
+  .infos__card{
+    max-width: 96vw !important;
+    padding: 18px 16px !important;
+  }
+  footer{
+    padding: 24px 14px !important;
+    border-radius: 12px 12px 0 0 !important;
+  }
+  .footer-links{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 10px;
+  }
+
+  /* -------- PAGES SECONDAIRES GÉNÉRIQUES -------- */
+  .page-content{
+    width: 100%;
+    max-width: 100% !important;
+    margin: 0 auto; 
+    padding: 70px 0 24px; /* marge top si navbar fixe */
+  }
+
+  /* -------- CONTACT -------- */
+  .container, .contact-wrapper{
+    flex-direction: column !important;
+    gap: 18px !important;
+    width: 92vw !important;
+    margin: 0 auto !important;
+  }
+  .map-container, .contact-card{ max-width: 100% !important; }
+  .map-container iframe{ height: 360px !important; }
+  .info-list{ max-width: 100% !important; }
+
+  /* Plein-clic sur les pastilles (si existantes) */
+  .info-pill{ position: relative; }
+  .info-pill a{
+    position: relative;
+    display: block !important;
+    width: 100%;
+  }
+}
+/* === NAV MOBILE — forçe la même hauteur que sur index === */
+@media (max-width: 768px){
+  .navbar{
+    position: fixed !important;
+    top: 0; left: 0; width: 100%;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 16px 20px !important;     /* même “épaisseur” partout */
+    background: #3B28CC !important;
+    z-index: 9999 !important;
+  }
+  .navbar .logo{ font-size: 18px !important; line-height: 1.2; }
+  .nav-links{
+    display: flex !important;
+    gap: 14px !important;
+    flex-wrap: wrap;
+  }
+  .nav-links a{
+    font-size: 14px !important;
+    padding: 6px 10px !important;
+    color: #fff !important;
+    text-decoration: none;
+  }
+
+  /* espace sous la barre fixe pour TOUTES les pages */
+  main, .page-content{ 
+    margin-top: 80px !important;       
+  }
+
+  /* pas de scroll horizontal parasite */
+  html, body{ overflow-x: hidden !important; }
+}
+
+/* === PAGES PROFILS (Florence / Lauriane / Marion / Anne-Claire) === */
+/* Passe les 2/3 colonnes en 1 colonne sur mobile */
+@media (max-width: 768px){
+  .cards, .cards-row, .grid, .columns, .profile-grid, .infos-grid{
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .card, .panel, .module{
+    min-width: auto !important;
+    width: 100% !important;
+  }
+  /* marge interne du contenu principal */
+  .page-content{ padding: 90px 16px 60px !important; }
+  /* images fluides */
+  img, video{ max-width: 100%; height: auto; }
+}
+
+/* === KINÉ & ART (a-propos.html) — galerie / colonnes === */
+@media (max-width: 768px){
+  .page-content { padding: 20px 0 24px; }
+
+  /* essaie de capter les différents noms possibles */
+  .gallery, .gallery-grid, .expo-grid, .masonry, .tiles, .columns{
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .gallery .column, .gallery .tile, .gallery .item, 
+  .gallery .card, .masonry > * , .columns > *{
+    width: 20% !important;
+    margin: 0 !important;
+  }
+
+  /* images + iframes (YouTube, etc.) fluides */
+  .page-content img, .page-content iframe{
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  /* Remonter le carrousel et enlever tout espace ajouté */
+.expo-carousel{ 
+  margin-top: 0 !important; 
+  padding-top: 0 !important; 
+}
+.expo-viewport {
+  width: 92vw;
+  height: 320px;   /* ou 60vh pour proportionner à l'écran */
+  aspect-ratio: 3 / 4;    /* cadre stable */
+  height: auto;           /* plus de hauteur forcée */
+  margin-top: 0;          /* ajuste selon besoin */
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.25);
+  background: #111;
+}
+
+/* Réduire l'écart sous le titre si besoin */
+.page-title{
+  margin: 8px 16px 10px !important;  /* haut | côtés | bas */
+}
+}
+
+/* === Footer : garde une respiration correcte sur mobile === */
+@media (max-width: 768px){
+  footer{ padding: 24px 16px !important; }
+}
+/* =========================
+   Mobile polish (≤ 768px)
+   ========================= */
+@media (max-width: 768px) {
+
+  /* Sécurité générale */
+  html, body { overflow-x: hidden; }
+  img, video, iframe, model-viewer { max-width: 100%; height: auto; }
+  main { padding-top: 72px; } /* si navbar fixed */
+
+  /* Navbar uniforme et lisible */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: auto;
+    padding: 14px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 1000;
+  }
+  .navbar .logo { font-size: 16px; font-weight: 700; }
+  .nav-links { gap: 12px; }
+  .nav-links a { font-size: 14px; padding: 6px 8px; }
+
+  /* Hero / gros titres + bouton */
+  .hero-row { margin: 24px 16px 8px; gap: 14px; }
+  .big-title,
+  .big-title.main-title { 
+    font-size: clamp(28px, 9vw, 38px);
+    margin: 0;
+    text-align: left;
+  }
+  .btn-rdv,
+  .btn-rdv.btn-rdv--hero {
+    font-size: 14px; padding: 12px 18px; border-radius: 14px;
+    display: inline-block;
+  }
+
+  /* CAROUSEL plein écran mais peu haut */
+  .carousel { height: 38vh; min-height: 220px; }
+  .carousel img { height: 100%; }
+
+  /* Section ÉQUIPE : 1 colonne, cartes allégées */
+  .team { padding: 28px 12px; }
+  .team__title { 
+    margin: 0 0 16px; 
+    font-size: clamp(26px, 7vw, 32px);
+  }
+  .team__grid {
+    display: grid;
+    grid-template-columns: 1fr;   /* 1 colonne */
+    gap: 14px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .team-card { border-radius: 14px; min-height: unset; }
+  .team-card__photo { height: 160px; }
+  .team-card__body { padding: 12px; gap: 8px; }
+  .team-card__name { font-size: 16px; }
+  .team-card__role { font-size: 13px; }
+  .team-tag { font-size: 11px; padding: 4px 8px; }
+  .team-card__actions { gap: 8px; }
+  .btn, .btn--ghost, .btn--white, .btn--alt { padding: 8px 10px; font-size: 13px; border-radius: 10px; }
+
+  /* Nuages 3D : plus petits et en arrière-plan */
+  .cloud-3d { opacity: .85; filter: saturate(.9) blur(.2px); }
+  .cloud-3d--1 { width: 220px; height: 150px; bottom: -8px; right: 50%; transform: translateX(50%); }
+  .cloud-3d--2 { width: 180px; height: 120px; left: -24px; top: 12px; }
+  .cloud-3d--3 { width: 180px; height: 120px; left: 22%; bottom: -14px; }
+  .cloud-3d--4 { width: 160px; height: 110px; right: -28px; top: 100px; }
+  .cloud-3d--5, .cloud-3d--6 { display: none; } /* allège sur mobile */
+
+  /* Section SPÉCIALISATION : grille 1 col + cartes compactes */
+  .specialite-section { padding: 28px 12px; }
+  .specialisation-title,
+  .specialite-section .big-title { 
+    font-size: clamp(26px, 7vw, 32px);
+    margin: 0 0 12px;
+    text-align: left;
+  }
+  .specialite-container { gap: 16px; }
+  .specialite-3d { width: 100%; height: clamp(220px, 42vw, 300px); }
+  .specialite-cards {
+    display: grid; grid-template-columns: 1fr; gap: 12px;
+    padding: 0;
+  }
+  .specialite-cards .card {
+    width: 100%; height: auto;
+    padding: 14px; border-radius: 14px;
+  }
+  .specialite-cards .card h4 {
+    font-size: clamp(14px, 4vw, 18px);
+    padding: 10px 6px;
+  }
+  .specialite-cards .card p {
+    position: static; margin-top: 8px; background: transparent;
+    font-size: 13px;
+  }
+
+  /* Section “Informations pratiques” / info-box */
+  .infos { padding: 22px 12px; }
+  .infos__card, .info-box {
+    max-width: 100%;
+    padding: 16px 14px;
+    font-size: 15px;
+    border-radius: 14px;
+    box-shadow: 0 8px 18px rgba(0,0,0,.16);
+  }
+  .infos__card h2 { font-size: 18px; margin-bottom: 10px; }
+
+  /* Footer compact */
+  footer { padding: 18px 12px; border-radius: 12px 12px 0 0; }
+  footer::before { height: 80px; bottom: -24px; }
+  .footer-links { margin: 10px 0; }
+  .footer-links a { display: inline-block; margin: 0 6px 6px 0; font-size: 13px; }
+  .copyright { font-size: 12px; }
+  
+  /* =========================
+     Pages individuelles (Florence, Lauriane, etc.)
+     ========================= */
+
+  /* Zone principale = colonne unique + marges faibles */
+  .page-content,
+  .container,
+  .contact-wrapper {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 16px 12px !important;
+    gap: 12px !important;
+  }
+
+  /* Cartes / panneaux */
+  .card, .panel, .info-panel, .skills, .notes,
+  .team-summary, .doctor-card, .module {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 14px !important;
+    padding: 14px !important;
+    box-sizing: border-box;
+  }
+
+  /* Grilles de 2-3 colonnes → 1 colonne */
+  .grid, .grid-2, .grid-3, .cards {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Vagues / décorations trop hautes */
+  .bottom-wave { height: 80px; }
+  
+  /* Titre de page */
+  .page-title { 
+    font-size: clamp(20px, 7vw, 26px);
+    margin: 8px 0 12px;
+  }
+
+  /* Contact page : carte & map */
+  .map-container iframe { height: 360px; }
+  .contact-card { padding: 14px; border-radius: 14px; }
+  .info-list { gap: 10px; }
+  .info-pill { padding: 12px; border-radius: 12px; }
+  .info-pill a { font-size: 14px; }
+}
+/* ====== PROFILS — Zoom doux + ordre mobile ====== */
+@media (max-width: 768px){
+
+  /* 1) Légère augmentation globale (plutôt que zoom CSS qui casse la mise en page) */
+  html { font-size: 17px; }                /* ~+6% */
+  body { line-height: 1.25; }
+
+  /* 2) Grille 1 colonne partout sur les pages profil */
+  .page-content,
+  .profile-grid,
+  .cards-row,
+  .grid,
+  .columns {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 90px 16px 56px !important;    /* espace sous la navbar + respirations */
+    overflow: visible;
+  }
+
+  /* 3) Cartes/panneaux agrandis mais contenus visibles */
+  .card, .panel, .module, .info-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 16px !important;
+    padding: 18px !important;
+    box-sizing: border-box;
+  }
+  .card h1, .card h2, .card h3 { font-size: clamp(18px, 5.2vw, 22px); }
+  .card p, .card li        { font-size: clamp(14px, 4.2vw, 16px); }
+
+  /* 4) Envoyer “Domaines & Spécialités” en bas
+        — si tu as une classe ou un id spécifique, dé-commente la ligne qui va bien. */
+
+  /* .page-content > #domains,              */
+  /* .page-content > .domains,              */
+  /* .page-content > .domaines,             */
+  /* .page-content > .skills { order: 10 !important; } */
+
+  /* Fallback : si le bloc “Domaines…” est la 2e carte, on la pousse en bas */
+  .page-content > :nth-child(2) { order: 10 !important; }
+
+  /* 5) Navbar homogène (même hauteur que l’index) */
+  .navbar{
+    position: fixed !important;
+    top: 0; left: 0; right: 0;
+    display: flex !important;
+    align-items: center; justify-content: space-between;
+    padding: 16px 20px !important;
+    background: #3B28CC; z-index: 9999;
+  }
+  .navbar .logo { font-size: 18px !important; font-weight: 700; }
+  .nav-links { display:flex !important; gap:14px !important; flex-wrap:wrap; }
+  .nav-links a { font-size:14px !important; padding:6px 10px !important; }
+
+  /* espace sous la barre fixe */
+  main, .page-content { margin-top: 80px !important; }
+
+  /* Sécurité anti-débordement */
+  html, body { overflow-x: hidden !important; }
+  img, video, iframe { max-width: 100%; height: auto; }
+}
+/* === FORCE LARGEUR PLEINE COLONNE SUR PROFILS (mobile) === */
+@media (max-width: 768px){
+
+  /* 1) Toute carte/bloc direct dans le contenu prend 100% */
+  .page-content > * {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    float: none !important;
+  }
+
+  /* 2) Et tous les blocs “type carte” à l’intérieur aussi */
+  .page-content .card,
+  .page-content .panel,
+  .page-content .module,
+  .page-content .info-panel,
+  .page-content .skills,
+  .page-content .notes,
+  .page-content [class*="card"],
+  .page-content [class*="panel"],
+  .page-content [class*="module"]{
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;        /* casse les min-width hérités */
+    box-sizing: border-box !important;
+  }
+
+  /* 3) Si une grille fixe des colonnes (300px / 1fr), on la remet à 1fr */
+  .page-content .grid,
+  .page-content .profile-grid,
+  .page-content .cards-row,
+  .page-content .columns,
+  .page-content [class*="grid"],
+  .page-content [class*="cols"]{
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* 4) Certaines mises en page utilisent flex avec largeur fixe : on les neutralise */
+  .page-content [style*="width"],
+  .page-content [style*="min-width"]{
+    width: auto !important;
+    min-width: 0 !important;
+  }
+
+  /* 5) Titre “Domaines & Spécialités” en bas si besoin */
+  /* Remplace .domains si tu as une classe dédiée */
+  .page-content .domains,
+  .page-content .domaines,
+  .page-content .skills {
+    order: 10 !important;
+  }
+  /* Fallback : si c’est la 2e carte de la page */
+  .page-content > :nth-child(2){ order: 10 !important; }
+
+  /* 6) Un peu de respiration latérale pour l’esthétique */
+  .page-content { padding: 90px 16px 56px !important; }
+}
+@media (max-width: 768px) {
+  /* Enlève le fond flou derrière */
+  .modal {
+    background: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+  }
+
+  #videoModal {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 95% !important;
+    max-width: 800px !important;
+    aspect-ratio: 16 / 9;
+    height: auto !important;
+    background: transparent !important; /* pas de fond */
+    border-radius: 0 !important;        /* supprime les coins arrondis */
+    box-shadow: none !important;        /* pas d’ombre */
+  }
+
+  #videoModal iframe,
+  #videoModal video {
+    width: 100% !important;
+    height: 100% !important;
+    border: none !important;
+    display: block;
+  }
+}
+/* CONTACT — centrage propre sur mobile */
+@media (max-width: 768px) {
+  /* le wrapper principal de la page contact */
+  .container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;   /* centre horizontalement les enfants */
+    gap: 18px !important;
+    width: 100% !important;
+    padding: 0 12px !important;       /* petite marge intérieure */
+    box-sizing: border-box;
+  }
+
+  /* les deux blocs inside (carte + panneau contact) */
+  .container > .map-container,
+  .container > .contact-card {
+    width: 100% !important;
+    max-width: 640px !important;      /* largeur max pour joli rendu */
+    margin: 0 auto !important;        /* centre */
+  }
+
+  /* la carte Google doit prendre toute la largeur disponible */
+  .map-container iframe {
+    width: 100% !important;
+    height: 360px !important;         /* déjà utilisé ailleurs chez toi */
+    border: 0;
+    border-radius: 14px;
+    display: block;
+  }
+}
+@media (max-width: 768px) {
+  .container {
+    margin-top: 90px !important;  /* espace sous la barre de navigation */
+  }
+
+  /* au cas où le bloc carte soit le premier */
+  .container > div:first-child {
+    margin-top: 20px !important;
+  }
+}
+@media (max-width: 768px) {
+  .expositions {
+    display: flex;
+    flex-direction: column; /* empile les blocs */
+    align-items: center;    /* centre les cartes */
+    gap: 20px;              /* espace entre les cartes */
+    padding: 15px;
+  }
+
+  .expositions .card {
+    width: 90%;       /* prend presque toute la largeur */
+    max-width: 400px; /* limite la taille pour garder esthétique */
+  }
+
+  .expositions .card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+}
+/* === A-PROPOS : débloquer le scroll vertical sur mobile === */
+@media (max-width: 768px) {
+  html, body {
+    height: auto !important;
+    min-height: 100dvh !important;
+    overflow-y: auto !important;    /* << permet de descendre */
+    overscroll-behavior-y: contain; /* évite les “rebonds” */
+  }
+
+  /* Rien en position “fixed”/hauteur figée qui pourrait bloquer */
+  .page-content,
+  .expositions,
+  .gallery,
+  .columns,
+  .masonry {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Les cartes/images ne doivent pas déborder */
+  .page-content img,
+  .expositions img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
+  }
+}@media (max-width: 768px) {
+  .expositions {            /* conteneur de tes cartes */
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 12px 16px;
+  }
+  .expositions .card {
+    width: 92vw;
+    max-width: 420px;
+  }
+}
+/* Version par défaut (PC) */
+body {
+  margin: 0;
+  padding: 0;
+  background: url("images/Musee3.png") center / cover no-repeat;
+  background-color: #001f3f; /* couleur autour si besoin */
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  position: relative;
+}
+
+/* Version mobile */
+@media (max-width: 768px) {
+  body {
+    background: url("images/Musee3.png") center / contain no-repeat;
+    background-color: #001f3f; /* garde un fond si l’image ne couvre pas tout */
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow-y: auto !important;
+  }
+}
+@media (max-width: 768px) {
+  .page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .expo-card {
+    width: 90%;          /* réduit la largeur */
+    max-width: 400px;    /* limite max pour pas trop étirer */
+    margin: 10px auto;   /* centre horizontalement */
+  }
+}
+/* ====== EXPO — Version mobile (≤768px) : afficher l'image ENTIEREMENT ====== */
+@media (max-width: 768px){
+  html, body{
+    height: auto !important;
+    min-height: 100dvh !important;   /* évite les soucis de barre d’URL mobile */
+    overflow-y: auto !important;
+  }
+
+  /* on cible la page d'expo UNIQUEMENT */
+  body.expo-page{
+    background-position: center top !important;
+    background-size: contain !important;   /* <-- clé : plus de zoom */
+    background-repeat: no-repeat !important;
+    background-attachment: scroll !important;
+    background-color: #001f3f;             /* fond autour de l’image */
+  }
+
+  /* bouton toujours visible */
+  .expo-page .exit{
+    position: fixed !important;
+    top: 12px; right: 12px;
+    z-index: 1000;
+  }
+}
+/* ===== Kiné & Art — version mobile : carrousel seulement ===== */
+@media (max-width: 768px){
+  /* On cache le layout desktop, on montre le carrousel mobile */
+  .desktop-only{ display: none !important; }
+  .mobile-only{ display: block !important; }
+
+  /* un peu d’air sous la navbar fixe si tu en as une */
+  .expo-carousel{ padding: 12px 0 24px; margin-top: 80px; }
+
+  .expo-viewport{
+    width: 92vw;
+    height: 62vh;                     /* hauteur du carrousel */
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    background: #111;
+  }
+
+  .expo-track{
+    display: flex;
+    width: 300%;
+    height: 100%;
+    transform: translateX(0);
+    will-change: transform;
+  }
+
+  .expo-slide{
+    flex: 0 0 100%;
+    height: 100%;
+  }
+
+  .expo-slide img{
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;                 /* plein cadre, sans bandes */
+  }
+}
+/* Mobile seulement */
+@media (max-width: 768px){
+  .desktop-only { display: none !important; }
+  .mobile-only  { display: block !important; }
+
+  /* Styles du carrousel mobile */
+  .expo-carousel{ padding:16px 0 28px; margin-top:80px; }
+  .expo-viewport{
+    width:92vw; height:62vh; margin:0 auto; overflow:hidden;
+    border-radius:16px; box-shadow:0 10px 24px rgba(0,0,0,.25); background:#111;
+  }
+  .expo-track{ display:flex; width:300%; height:100%; transform:translateX(0); will-change:transform; }
+  .expo-slide{ flex:0 0 100%; height:100%; }
+  .expo-slide img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  .expo-dots{ display:flex; gap:8px; justify-content:center; margin-top:10px; }
+  .expo-dot{ width:8px; height:8px; border-radius:50%; background:#9aa4ff; opacity:.45; }
+  .expo-dot.is-active{ opacity:1; }
+}
+/* === FORCER LE LAYOUT MOBILE (<=768px) === */
+@media (max-width: 768px){
+  /* Cache les cartes, montre le carrousel */
+  .desktop-only { display: none !important; }
+  .mobile-only  { display: block !important; }
+
+  /* Carrousel mobile : largeur et centrage */
+  .expo-carousel { margin-top: 90px; padding: 10px 0; }
+  .expo-viewport{
+    width: 90vw; height: 60vh; margin: 0 auto;
+    overflow: hidden; border-radius: 16px;
+    box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    background: #111;
+  }
+  .expo-track{ display:flex; width:300%; height:100%; transform:translateX(0); }
+  .expo-slide{ flex:0 0 100%; height:100%; }
+  .expo-slide img{ width:100%; height:100%; object-fit:cover; }
+
+  .expo-dots{ display:flex; gap:8px; justify-content:center; margin-top:10px; }
+  .expo-dot{ width:8px; height:8px; border-radius:50%; background:#9aa4ff; opacity:.45; }
+  .expo-dot.is-active{ opacity:1; }
+}
+@media (max-width: 768px) {
+
+  /* Le viewport garde un ratio 3:4 qui marche nickel en portrait */
+  .expo-carousel { margin-top: 0px; padding: 10px 0; }
+  .expo-viewport{
+    width: 92vw;
+    aspect-ratio: 3 / 4;   /* << clé pour un cadre stable */
+    height: 450px;
+    margin-top: -420px;   /* remonte uniquement vers le haut */
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    background: #111;      /* fond neutre si ‘contain’ */
+    touch-action: pan-y;    /* évite conflit scroll / swipe horizontal */
+  }
+
+  .expo-track{
+    display: flex;
+    height: 100%;
+    width: 100%;           /* on le calcule en JS */
+    transform: translateX(0);
+    transition: transform .35s ease;
+  }
+
+  .expo-slide{ flex: 0 0 100%; height: 100%; display: grid; place-items: center; }
+
+  /* Montre toute l’image sans recadrage */
+  .expo-slide img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;   /* << aucune partie coupée */
+    background: transparent;
+  }
+
+  /* Indicateurs */
+  .expo-dots{ display:flex; gap:8px; justify-content:center; margin-top:10px; }
+  .expo-dot{ width:8px; height:8px; border-radius:50%; background:#9aa4ff; opacity:.4; }
+  .expo-dot.is-active{ opacity:1; }
+}
+@media (max-width: 768px) {
+
+  /* Titre mobile */
+  .page-title {
+    font-size: 28px;              /* taille adaptée mobile */
+    text-align: center;           /* centré */
+    margin: -320px -320px -320px -320px;  /* espace sous la navbar + petit écart avec l'image */
+    line-height: 1.2;
+  }
+
+  /* Carrousel */
+  .expo-carousel {
+    margin-top: 0;      /* supprime le gros écart */
+    padding-top: 0;
+    display: flex;
+    justify-content: center;  /* centre le bloc */
+  }
+
+  .expo-viewport {
+    margin: 0 auto;    /* bien centré */
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* Images dans le carrousel mobile */
+  .expo-carousel img {
+    width: 100%;         /* occupe toute la largeur */
+    height: 70vh;        /* prend 70% de la hauteur de l'écran */
+    object-fit: cover;   /* recadre sans déformer */
+    border-radius: 12px; /* joli arrondi */
+  }
+
+  /* Si elles sont dans des cartes */
+  .art-card img {
+    width: 100%;
+    height: auto;
+    max-height: 75vh;    /* limite à 75% de l'écran */
+    object-fit: contain; /* garde l'image entière */
+  }
+}
+@media (max-width: 768px){
+  .expo-carousel__viewport{
+    width: min(92vw, 420px);
+    aspect-ratio: 3 / 4;
+    background: transparent;
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 8px auto 18px;
+
+    display: flex;             /* flexbox */
+    justify-content: center;   /* centré horizontalement */
+    align-items: flex-start;   /* collé en haut */
+  }
+
+  .expo-carousel__img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;          /* rempli le cadre, recadrage éventuel */
+    object-position: top;       /* focus sur le haut */
+  }
+}
+/* Mobile - ajustements navbar + image */
+@media (max-width: 768px) {
+  .navbar {
+    height: 100px;              /* 🔥 augmente un peu la hauteur */
+    padding: 15px 20px;        /* 🔥 ajoute un peu de marge intérieure */
+    display: flex;
+    align-items: center;       /* centre verticalement */
+  }
+
+  .carousel img, 
+  .expo-carousel__viewport {
+    margin-top: 0 !important;  /* 🔥 supprime l’espace au-dessus */
+    padding-top: 0 !important;
+    display: block;
+  }
+
+  .page-content {
+    padding-top: 0 !important; /* 🔥 empêche le contenu de descendre */
+  }
+}
+@media (max-width:768px){
+  .expo-viewport{ width:90vw; height:56vh; margin:0 auto; overflow:hidden; border-radius:16px; background:#111; }
+
+  @keyframes scrollExpo{ from{transform:translateX(0)} to{transform:translateX(-100%)} }
+
+  .expo-track{ display:flex; height:100%; width:max-content; will-change:transform; }
+  .expo-track--auto{ animation:scrollExpo 60s linear infinite; } /* ← vitesse (mets 90s/120s si tu veux plus lent) */
+
+  .expo-slide{ flex:0 0 90vw; height:100%; }
+  .expo-slide img{ width:100%; height:100%; object-fit:contain; background:#111; display:block; }
+}
